@@ -1,0 +1,382 @@
+[
+  {
+    "name": "DKI Jakarta",
+    "capital": "Jakarta",
+    "region": "Jawa",
+    "value": 11.59,
+    "longitude": 106.85,
+    "latitude": -6.18,
+    "rank": 1,
+    "diff": 2.52
+  },
+  {
+    "name": "Kepulauan Riau",
+    "capital": "Tanjungpinang",
+    "region": "Sumatera",
+    "value": 10.72,
+    "longitude": 104.45,
+    "latitude": 0.92,
+    "rank": 2,
+    "diff": 1.65
+  },
+  {
+    "name": "Maluku",
+    "capital": "Ambon",
+    "region": "Maluku & Papua",
+    "value": 10.51,
+    "longitude": 128.18,
+    "latitude": -3.7,
+    "rank": 3,
+    "diff": 1.44
+  },
+  {
+    "name": "DI Yogyakarta",
+    "capital": "Yogyakarta",
+    "region": "Jawa",
+    "value": 10.2,
+    "longitude": 110.37,
+    "latitude": -7.8,
+    "rank": 4,
+    "diff": 1.13
+  },
+  {
+    "name": "Kalimantan Timur",
+    "capital": "Samarinda",
+    "region": "Kalimantan",
+    "value": 10.1,
+    "longitude": 117.15,
+    "latitude": -0.5,
+    "rank": 5,
+    "diff": 1.03
+  },
+  {
+    "name": "Sumatera Utara",
+    "capital": "Medan",
+    "region": "Sumatera",
+    "value": 10.08,
+    "longitude": 98.67,
+    "latitude": 3.59,
+    "rank": 6,
+    "diff": 1.01
+  },
+  {
+    "name": "Papua",
+    "capital": "Jayapura",
+    "region": "Maluku & Papua",
+    "value": 10.01,
+    "longitude": 140.72,
+    "latitude": -2.53,
+    "rank": 7,
+    "diff": 0.94
+  },
+  {
+    "name": "Aceh",
+    "capital": "Banda Aceh",
+    "region": "Sumatera",
+    "value": 9.95,
+    "longitude": 95.32,
+    "latitude": 5.55,
+    "rank": 8,
+    "diff": 0.879999999999999
+  },
+  {
+    "name": "Sulawesi Utara",
+    "capital": "Manado",
+    "region": "Sulawesi",
+    "value": 9.91,
+    "longitude": 124.85,
+    "latitude": 1.47,
+    "rank": 9,
+    "diff": 0.84
+  },
+  {
+    "name": "Sumatera Barat",
+    "capital": "Padang",
+    "region": "Sumatera",
+    "value": 9.77,
+    "longitude": 100.36,
+    "latitude": -0.95,
+    "rank": 10,
+    "diff": 0.699999999999999
+  },
+  {
+    "name": "Bali",
+    "capital": "Denpasar",
+    "region": "Bali & Nusa",
+    "value": 9.75,
+    "longitude": 115.22,
+    "latitude": -8.65,
+    "rank": 11,
+    "diff": 0.68
+  },
+  {
+    "name": "Banten",
+    "capital": "Serang",
+    "region": "Jawa",
+    "value": 9.56,
+    "longitude": 106.15,
+    "latitude": -6.12,
+    "rank": 12,
+    "diff": 0.49
+  },
+  {
+    "name": "Sulawesi Tenggara",
+    "capital": "Kendari",
+    "region": "Sulawesi",
+    "value": 9.56,
+    "longitude": 122.51,
+    "latitude": -3.99,
+    "rank": 12,
+    "diff": 0.49
+  },
+  {
+    "name": "Riau",
+    "capital": "Pekanbaru",
+    "region": "Sumatera",
+    "value": 9.55,
+    "longitude": 101.45,
+    "latitude": 0.51,
+    "rank": 14,
+    "diff": 0.48
+  },
+  {
+    "name": "Maluku Utara",
+    "capital": "Ambon",
+    "region": "Maluku & Papua",
+    "value": 9.5,
+    "longitude": 128.18,
+    "latitude": -3.7,
+    "rank": 15,
+    "diff": 0.43
+  },
+  {
+    "name": "Kalimantan Utara",
+    "capital": "Tanjung Selor",
+    "region": "Kalimantan",
+    "value": 9.44,
+    "longitude": 117.37,
+    "latitude": 2.84,
+    "rank": 16,
+    "diff": 0.369999999999999
+  },
+  {
+    "name": "Bengkulu",
+    "capital": "Bengkulu",
+    "region": "Sumatera",
+    "value": 9.23,
+    "longitude": 102.27,
+    "latitude": -3.8,
+    "rank": 17,
+    "diff": 0.16
+  },
+  {
+    "name": "Jawa Barat",
+    "capital": "Bandung",
+    "region": "Jawa",
+    "value": 9.14,
+    "longitude": 107.61,
+    "latitude": -6.91,
+    "rank": 18,
+    "diff": 0.0700000000000003
+  },
+  {
+    "name": "Sulawesi Tengah",
+    "capital": "Palu",
+    "region": "Sulawesi",
+    "value": 9.1,
+    "longitude": 119.87,
+    "latitude": -0.9,
+    "rank": 19,
+    "diff": 0.0299999999999994
+  },
+  {
+    "name": "Sulawesi Selatan",
+    "capital": "Makassar",
+    "region": "Sulawesi",
+    "value": 9.0,
+    "longitude": 119.41,
+    "latitude": -5.15,
+    "rank": 20,
+    "diff": -0.0700000000000003
+  },
+  {
+    "name": "Kalimantan Tengah",
+    "capital": "Palangkaraya",
+    "region": "Kalimantan",
+    "value": 8.96,
+    "longitude": 113.92,
+    "latitude": -2.21,
+    "rank": 21,
+    "diff": -0.109999999999999
+  },
+  {
+    "name": "Jambi",
+    "capital": "Jambi",
+    "region": "Sumatera",
+    "value": 8.95,
+    "longitude": 103.61,
+    "latitude": -1.61,
+    "rank": 22,
+    "diff": -0.120000000000001
+  },
+  {
+    "name": "Sumatera Selatan",
+    "capital": "Palembang",
+    "region": "Sumatera",
+    "value": 8.91,
+    "longitude": 104.75,
+    "latitude": -2.99,
+    "rank": 23,
+    "diff": -0.16
+  },
+  {
+    "name": "Kalimantan Selatan",
+    "capital": "Banjarbaru",
+    "region": "Kalimantan",
+    "value": 8.81,
+    "longitude": 114.83,
+    "latitude": -3.44,
+    "rank": 24,
+    "diff": -0.26
+  },
+  {
+    "name": "Papua Barat Daya",
+    "capital": "Jayapura",
+    "region": "Maluku & Papua",
+    "value": 8.69,
+    "longitude": 140.72,
+    "latitude": -2.53,
+    "rank": 25,
+    "diff": -0.380000000000001
+  },
+  {
+    "name": "Kepulauan Bangka Belitung",
+    "capital": "Pangkalpinang",
+    "region": "Sumatera",
+    "value": 8.65,
+    "longitude": 106.12,
+    "latitude": -2.13,
+    "rank": 26,
+    "diff": -0.42
+  },
+  {
+    "name": "Papua Selatan",
+    "capital": "Jayapura",
+    "region": "Maluku & Papua",
+    "value": 8.64,
+    "longitude": 140.72,
+    "latitude": -2.53,
+    "rank": 27,
+    "diff": -0.43
+  },
+  {
+    "name": "Lampung",
+    "capital": "Bandar Lampung",
+    "region": "Sumatera",
+    "value": 8.61,
+    "longitude": 105.27,
+    "latitude": -5.43,
+    "rank": 28,
+    "diff": -0.460000000000001
+  },
+  {
+    "name": "Jawa Timur",
+    "capital": "Surabaya",
+    "region": "Jawa",
+    "value": 8.39,
+    "longitude": 112.75,
+    "latitude": -7.25,
+    "rank": 29,
+    "diff": -0.68
+  },
+  {
+    "name": "Gorontalo",
+    "capital": "Gorontalo",
+    "region": "Sulawesi",
+    "value": 8.38,
+    "longitude": 123.06,
+    "latitude": 0.54,
+    "rank": 30,
+    "diff": -0.69
+  },
+  {
+    "name": "Sulawesi Barat",
+    "capital": "Mamuju",
+    "region": "Sulawesi",
+    "value": 8.31,
+    "longitude": 118.89,
+    "latitude": -2.68,
+    "rank": 31,
+    "diff": -0.76
+  },
+  {
+    "name": "Nusa Tenggara Timur",
+    "capital": "Kupang",
+    "region": "Bali & Nusa",
+    "value": 8.22,
+    "longitude": 123.61,
+    "latitude": -10.18,
+    "rank": 32,
+    "diff": -0.85
+  },
+  {
+    "name": "Nusa Tenggara Barat",
+    "capital": "Mataram",
+    "region": "Bali & Nusa",
+    "value": 8.21,
+    "longitude": 116.12,
+    "latitude": -8.58,
+    "rank": 33,
+    "diff": -0.859999999999999
+  },
+  {
+    "name": "Jawa Tengah",
+    "capital": "Semarang",
+    "region": "Jawa",
+    "value": 8.15,
+    "longitude": 110.42,
+    "latitude": -6.97,
+    "rank": 34,
+    "diff": -0.92
+  },
+  {
+    "name": "Kalimantan Barat",
+    "capital": "Pontianak",
+    "region": "Kalimantan",
+    "value": 8.07,
+    "longitude": 109.34,
+    "latitude": -0.03,
+    "rank": 35,
+    "diff": -1.0
+  },
+  {
+    "name": "Papua Barat",
+    "capital": "Jayapura",
+    "region": "Maluku & Papua",
+    "value": 8.07,
+    "longitude": 140.72,
+    "latitude": -2.53,
+    "rank": 35,
+    "diff": -1.0
+  },
+  {
+    "name": "Papua Tengah",
+    "capital": "Jayapura",
+    "region": "Maluku & Papua",
+    "value": 6.13,
+    "longitude": 140.72,
+    "latitude": -2.53,
+    "rank": 37,
+    "diff": -2.94
+  },
+  {
+    "name": "Papua Pegunungan",
+    "capital": "Jayapura",
+    "region": "Maluku & Papua",
+    "value": 4.3,
+    "longitude": 140.72,
+    "latitude": -2.53,
+    "rank": 38,
+    "diff": -4.77
+  }
+]
