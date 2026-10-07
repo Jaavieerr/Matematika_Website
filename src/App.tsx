@@ -8,7 +8,7 @@ import { BehindTheNumbers } from './components/BehindTheNumbers';
 export interface ScoreEntry {
   name: string;
   score: number;
-  date: string;
+  date?: string;
 }
 
 export function App() {
@@ -18,7 +18,7 @@ export function App() {
     provinces.find(p => p.name === 'DKI Jakarta') || provinces[0]
   );
 
-  // Personal Goal Calculator State (Umur dihapus sesuai instruksi)
+  // Personal Goal Calculator State
   const [personalProvince, setPersonalProvince] = useState<string>('DKI Jakarta');
   const [personalGoalYears, setPersonalGoalYears] = useState<number>(12); // Lulus SMA / SMK
 
@@ -45,20 +45,22 @@ export function App() {
     return [];
   });
 
-  // Quiz Modal State
+  // Quiz State (Intro -> Question 1..15 -> Result)
+  const [quizStep, setQuizStep] = useState<'intro' | 'question' | 'result'>('intro');
+  const [playerName, setPlayerName] = useState('');
   const [currentQIndex, setCurrentQIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
   const [quizScore, setQuizScore] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
-  const [isQuizFinished, setIsQuizFinished] = useState(false);
-  const [playerName, setPlayerName] = useState('');
-  const [hasSavedScore, setHasSavedScore] = useState(false);
 
   const reloadLeaderboard = () => {
     try {
       const saved = localStorage.getItem('sekolah-scores-15');
       if (saved) {
-        setLeaderboard(JSON.parse(saved).slice(0, 5));
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setLeaderboard(parsed.slice(0, 5));
+        }
       }
     } catch {
       // ignore
@@ -94,13 +96,32 @@ export function App() {
   const simMax = Math.max(...simValues).toFixed(2);
   const simGap = (Math.max(...simValues) - Math.min(...simValues)).toFixed(2);
 
-  // Quiz Handlers
+  // Quiz Modal Logic
+  const handleOpenQuiz = () => {
+    setQuizStep('intro');
+    setCurrentQIndex(0);
+    setSelectedChoice(null);
+    setQuizScore(0);
+    setShowExplanation(false);
+    setIsQuizModalOpen(true);
+  };
+
+  const handleStartQuizFromIntro = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!playerName.trim()) return;
+    setQuizStep('question');
+    setCurrentQIndex(0);
+    setSelectedChoice(null);
+    setQuizScore(0);
+    setShowExplanation(false);
+  };
+
   const handleAnswerClick = (choiceIdx: number) => {
     if (showExplanation) return;
     setSelectedChoice(choiceIdx);
     setShowExplanation(true);
     if (choiceIdx === quizQuestions[currentQIndex].correct) {
-      setQuizScore(prev => prev + 1);
+      setQuizScore(prev => prev + 100); // 100 points per question = 1500 total
     }
   };
 
@@ -110,40 +131,29 @@ export function App() {
       setSelectedChoice(null);
       setShowExplanation(false);
     } else {
-      setIsQuizFinished(true);
+      // Finished: automatically save to leaderboard
+      const finalScore = quizScore + (selectedChoice === quizQuestions[currentQIndex].correct ? 0 : 0);
+      try {
+        const existing = localStorage.getItem('sekolah-scores-15');
+        const list: ScoreEntry[] = existing ? JSON.parse(existing) : [];
+        const newEntry: ScoreEntry = {
+          name: playerName.trim() || 'Explorer',
+          score: finalScore,
+          date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })
+        };
+        list.push(newEntry);
+        list.sort((a, b) => b.score - a.score);
+        localStorage.setItem('sekolah-scores-15', JSON.stringify(list));
+        reloadLeaderboard();
+      } catch {
+        // ignore
+      }
+      setQuizStep('result');
     }
   };
 
-  const handleSaveScore = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!playerName.trim()) return;
-    try {
-      const existing = localStorage.getItem('sekolah-scores-15');
-      const list: ScoreEntry[] = existing ? JSON.parse(existing) : [];
-      const newEntry: ScoreEntry = {
-        name: playerName.trim(),
-        score: quizScore,
-        date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })
-      };
-      list.push(newEntry);
-      list.sort((a, b) => b.score - a.score);
-      localStorage.setItem('sekolah-scores-15', JSON.stringify(list));
-      setHasSavedScore(true);
-      reloadLeaderboard();
-    } catch {
-      // ignore
-    }
-  };
-
-  const handleResetQuiz = () => {
-    setCurrentQIndex(0);
-    setSelectedChoice(null);
-    setQuizScore(0);
-    setShowExplanation(false);
-    setIsQuizFinished(false);
-    setPlayerName('');
-    setHasSavedScore(false);
-  };
+  // Medal icons for leaderboard
+  const rankMedals = ['🥇', '🥈', '🥉', '04', '05'];
 
   return (
     <div className="min-h-screen bg-[#f9f6ee] text-[#23201d] font-sans antialiased selection:bg-[#faecc2] selection:text-[#583794]">
@@ -180,10 +190,7 @@ export function App() {
           </nav>
 
           <button
-            onClick={() => {
-              handleResetQuiz();
-              setIsQuizModalOpen(true);
-            }}
+            onClick={handleOpenQuiz}
             className="flex items-center gap-2 rounded-xl bg-[#faecc2] px-4 py-2 text-xs font-bold text-[#6d5a1b] shadow-sm transition hover:bg-[#f5e3ad]"
           >
             <span>Mulai Kuis</span>
@@ -229,10 +236,7 @@ export function App() {
               </a>
 
               <button
-                onClick={() => {
-                  handleResetQuiz();
-                  setIsQuizModalOpen(true);
-                }}
+                onClick={handleOpenQuiz}
                 className="flex items-center gap-2 rounded-xl border border-[#e7e2d7] bg-[#faecc2] px-5 py-2.5 text-xs font-bold text-[#6d5a1b] shadow-sm transition hover:bg-[#f5e3ad]"
               >
                 <span>Mulai Kuis</span>
@@ -247,7 +251,7 @@ export function App() {
         </div>
       </section>
 
-      {/* 3. Section 01: The Big Picture (Persis Desain Figma: Map di kiri, Sorotan Provinsi di kanan) */}
+      {/* 3. Section 01: The Big Picture (Peta di kiri, Spotlight di kanan persis Figma) */}
       <section id="explore" className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-10">
         <div className="mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
@@ -274,7 +278,7 @@ export function App() {
           </div>
         </div>
 
-        {/* Unified Card: Interactive Map + Sidebar Spotlight (100% Figma Layout) */}
+        {/* Unified 100% Figma Card: Map di kiri, Spotlight di kanan */}
         <div className="overflow-hidden rounded-[26px] border border-[#e7e2d7] bg-white shadow-sm">
           <div className="grid min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_290px]">
             {/* Map Area on the Left */}
@@ -364,7 +368,7 @@ export function App() {
         </div>
       </section>
 
-      {/* 4. Section 02: Make It Personal & Versus (Umur dihapus total) */}
+      {/* 4. Section 02: Make It Personal & Versus */}
       <section id="playground" className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-10">
         <div className="mb-4">
           <div className="mb-2 flex items-center gap-2">
@@ -384,7 +388,7 @@ export function App() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-2 items-start">
-          {/* Sub-Card 1: Personal Journey (Dropdown Form persis Figma, tanpa umur) */}
+          {/* Sub-Card 1: Personal Journey */}
           <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-5 shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between border-b border-[#e7e2d7] pb-2.5 mb-3">
@@ -555,7 +559,7 @@ export function App() {
         </div>
       </section>
 
-      {/* 5. Section 03: Change The Playbook (Policy Sandbox) */}
+      {/* 5. Section 03: Change The Playbook */}
       <section className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-10">
         <div className="rounded-[24px] border border-[#e7e2d7] bg-[#fdfcf9] p-5 sm:p-8 shadow-sm">
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] items-center">
@@ -565,7 +569,7 @@ export function App() {
                   03
                 </span>
                 <span className="text-[11px] font-bold tracking-widest text-[#746e63]">
-                  SIMULASI KEBIJAKAN
+                  CHANGE THE PLAYBOOK
                 </span>
               </div>
               <h2 className="font-display text-[24px] font-extrabold leading-tight sm:text-[30px] text-[#23201d]">
@@ -573,7 +577,7 @@ export function App() {
                 <span className="text-[#7350b5]">Menteri Pendidikan?</span>
               </h2>
               <p className="mt-2 text-[13px] leading-relaxed text-[#746e63]">
-                Geser slider kebijakan di bawah untuk mensimulasikan percepatan akses dan infrastruktur pendidikan tertarget di seluruh daerah 3T & daerah tertinggal.
+                Geser slider buat ningkatin tahun sekolah, and see what happens to the whole country.
               </p>
 
               <div className="mt-5 rounded-2xl bg-[#ebe4f8] p-4 border border-[#d8cceb]">
@@ -595,8 +599,8 @@ export function App() {
                 />
 
                 <div className="flex justify-between text-[10px] font-bold text-[#583794] mt-2">
-                  <span>Status Quo (+0 thn)</span>
-                  <span>Prioritas Maksimal (+3 thn)</span>
+                  <span>As it is</span>
+                  <span>Maximum (+3 years)</span>
                 </div>
               </div>
             </div>
@@ -604,7 +608,7 @@ export function App() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div className="rounded-2xl border border-[#e7e2d7] bg-white p-4 shadow-sm">
                 <span className="text-[10px] font-bold tracking-wider text-[#746e63] uppercase">
-                  Rata-Rata Nasional (Mean)
+                  Rata-Rata Nasional Terkini
                 </span>
                 <div className="mt-1.5 flex items-baseline gap-1.5">
                   <span className="text-2xl font-extrabold text-[#7350b5]">{simMean}</span>
@@ -624,7 +628,7 @@ export function App() {
                   <span className="text-xs text-[#746e63]">tahun</span>
                 </div>
                 <p className="mt-1 text-[11px] text-[#746e63]">
-                  Gap menyusut <strong className="text-emerald-700">{(Number(originalGap) - Number(simGap)).toFixed(2)} thn</strong> lebih sempit & merata.
+                  The gap is <strong className="text-emerald-700">{(Number(originalGap) - Number(simGap)).toFixed(2)} thn</strong> narrower.
                 </p>
               </div>
 
@@ -661,90 +665,94 @@ export function App() {
       {/* 6. Section 04: Behind The Numbers (Diagram Lingkaran Persentase) */}
       <BehindTheNumbers />
 
-      {/* 7. Section 05: Leaderboard */}
+      {/* 7. Section 05: Leaderboard (100% Persis Image #1) */}
       <section id="leaderboard" className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-10">
-        <div className="overflow-hidden rounded-[24px] border border-[#e7dfb9] bg-[#f8f3de] p-5 sm:p-8 shadow-sm">
-          <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr] items-center">
+        <div className="overflow-hidden rounded-[22px] border border-[#e7dfb9] bg-[#f8f3de] p-6 sm:p-9 shadow-sm">
+          <div className="grid gap-7 md:grid-cols-[0.9fr_1.1fr] items-center">
+            {/* Left Box */}
             <div>
-              <div className="mb-2 flex items-center gap-2">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#faecc2] text-[10px] font-bold text-[#6d5a1b]">
+              <div className="mb-3 flex items-center gap-2">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#f0ebd8] text-[10px] font-bold text-[#5c4a1e]">
                   05
                 </span>
                 <span className="text-[11px] font-bold tracking-widest text-[#746e63]">
-                  PAPAN SKOR EKSPLORER
+                  SMART MINDS, BIG HEARTS
                 </span>
               </div>
               <h2 className="font-display text-[26px] font-extrabold sm:text-[30px] text-[#23201d]">
-                Papan Peringkat <br />
-                Penjelajah Data
+                The Perspective <br />
+                Leaderboard
               </h2>
-              <p className="mt-2 text-[13px] leading-relaxed text-[#746e63]">
-                Tempat berkumpulnya para penjelajah data yang peduli dengan masa depan pendidikan Indonesia. Selesaikan kuis dan ukir namamu di sini!
+              <p className="mt-3 text-[13px] leading-relaxed text-[#746e63]">
+                Not about being the smartest. It's about being curious. Ready to put your name on the board?
               </p>
 
               <button
-                onClick={() => {
-                  handleResetQuiz();
-                  setIsQuizModalOpen(true);
-                }}
-                className="mt-4 flex items-center gap-2 rounded-xl bg-[#7350b5] px-5 py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
+                onClick={handleOpenQuiz}
+                className="mt-6 flex items-center gap-2 rounded-xl bg-[#281c3c] px-6 py-3.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#3d2b59]"
               >
-                <span>Mainkan Kuis Sekarang</span>
+                <span>Let's Play the Quiz</span>
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-currentColor stroke-2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </button>
+
+              <p className="mt-4 text-[11px] text-[#8a8169]">
+                15 rapid questions · 1500 possible points · Good vibes only
+              </p>
             </div>
 
-            <div className="rounded-2xl border border-[#e2d8ab] bg-white p-4 sm:p-5 shadow-sm">
-              <div className="flex items-center justify-between border-b border-[#e7e2d7] pb-2.5 mb-3">
-                <span className="text-xs font-bold tracking-wider text-[#746e63] uppercase">
-                  5 Teratas · Sahabat Penjelajah
-                </span>
-                <span className="text-[10px] font-semibold text-[#746e63]">
-                  Tersimpan di Perangkat Ini
+            {/* Right Leaderboard Card (100% Matching Image #1) */}
+            <div className="rounded-[22px] border border-[#e2d8ab] bg-white p-5 sm:p-6 shadow-sm">
+              <div className="flex items-center justify-between border-b border-[#f0ebd8] pb-3 mb-2">
+                <h3 className="text-xs font-bold text-[#23201d]">
+                  Top 5 · Curious Club
+                </h3>
+                <span className="rounded-full bg-[#f2eedf] px-2.5 py-1 text-[8px] font-bold tracking-wider text-[#8a8169]">
+                  ON THIS DEVICE
                 </span>
               </div>
 
-              {leaderboard.length === 0 ? (
-                <div className="py-6 text-center">
-                  <p className="text-xs font-semibold text-[#23201d]">
-                    Belum ada skor yang tersimpan.
-                  </p>
-                  <p className="mt-1 text-[11px] text-[#746e63]">
-                    Jadilah explorer pertama yang menuntaskan kuis 15 soal!
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-1.5">
-                  {leaderboard.map((entry, idx) => (
+              {/* Table Column Headers */}
+              <div className="grid grid-cols-[36px_1fr_60px] border-b border-[#f0ebd8] py-2 text-[9px] font-bold tracking-wider text-[#8a8169]">
+                <span>RANK</span>
+                <span>EXPLORER</span>
+                <span className="text-right">POINTS</span>
+              </div>
+
+              {/* 5 Rows */}
+              <div className="divide-y divide-[#f0ebd8]">
+                {[0, 1, 2, 3, 4].map((idx) => {
+                  const entry = leaderboard[idx];
+                  return (
                     <div
                       key={idx}
-                      className="flex items-center justify-between rounded-xl bg-[#fbf9f4] p-2.5 border border-[#f0ebd8]"
+                      className="grid grid-cols-[36px_1fr_60px] items-center py-2.5 text-xs"
                     >
-                      <div className="flex items-center gap-2.5">
-                        <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
-                          idx === 0 ? 'bg-[#faecc2] text-[#6d5a1b]' : 'bg-[#ebe4f8] text-[#583794]'
-                        }`}>
-                          {idx + 1}
-                        </span>
-                        <span className="text-xs font-bold text-[#23201d]">
-                          {entry.name}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5">
-                        <span className="rounded-lg bg-[#ebe4f8] px-2 py-0.5 text-xs font-extrabold text-[#7350b5]">
-                          {entry.score} / 15 Poin
-                        </span>
-                        <span className="text-[10px] text-[#746e63]">
-                          {entry.date}
-                        </span>
-                      </div>
+                      <span className="font-bold text-[#23201d]">
+                        {rankMedals[idx]}
+                      </span>
+                      <span className="font-medium text-[#23201d]">
+                        {entry ? entry.name : (idx === 0 ? 'Your name could be here' : 'Open spot. Join the club!')}
+                      </span>
+                      <span className="text-right font-bold text-[#7350b5]">
+                        {entry ? `${entry.score}` : '—'}
+                      </span>
                     </div>
-                  ))}
-                </div>
-              )}
+                  );
+                })}
+              </div>
+
+              {/* Action Button */}
+              <button
+                onClick={handleOpenQuiz}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#7350b5] py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
+              >
+                <span>Lihat Leaderboard</span>
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-none stroke-currentColor stroke-2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -770,24 +778,101 @@ export function App() {
         </div>
       </footer>
 
-      {/* 9. Quiz Modal (15 Soal) */}
+      {/* 9. Quiz Modal (100% Matching Image #2 with Name Input First) */}
       {isQuizModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-          <div className="relative max-h-[90vh] w-full max-w-[600px] overflow-y-auto rounded-[24px] border border-[#e7e2d7] bg-white p-5 sm:p-7 shadow-2xl">
+          <div className="relative max-h-[90vh] w-full max-w-[540px] overflow-y-auto rounded-[28px] border border-[#e7e2d7] bg-white p-6 sm:p-8 shadow-2xl">
+            {/* Close Button */}
             <button
               onClick={() => setIsQuizModalOpen(false)}
-              className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-[#f3efe6] text-xs font-bold text-[#746e63] hover:bg-[#e7e2d7]"
+              className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-[#f3efe6] text-xs font-bold text-[#746e63] hover:bg-[#e7e2d7]"
             >
               ✕
             </button>
 
-            {!isQuizFinished ? (
+            {/* Step 1: Intro Tab / Kenalan Dulu (100% Persis Image #2) */}
+            {quizStep === 'intro' && (
+              <div>
+                <p className="text-[10px] font-bold tracking-wider text-[#746e63] uppercase">
+                  QUICK BRAIN CHECK · READY, SET, GROW
+                </p>
+
+                {/* Book Icon */}
+                <div className="mt-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#dfd3f0] bg-[#ebe4f8] text-[#7350b5]">
+                  <svg viewBox="0 0 24 24" className="h-7 w-7 fill-none stroke-currentColor stroke-2">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                    <path d="M6 6h10" />
+                    <path d="M6 10h10" />
+                  </svg>
+                </div>
+
+                <h2 className="mt-4 font-display text-[22px] sm:text-[26px] font-extrabold leading-snug text-[#23201d]">
+                  Siap uji pemahaman kamu tentang{' '}
+                  <span className="text-[#7350b5]">Rata-rata Lama Sekolah?</span>
+                </h2>
+
+                <p className="mt-2.5 text-xs sm:text-[13px] leading-relaxed text-[#746e63]">
+                  Let's put your perspective to the test! Kenalan dulu, lalu jawab 15 pertanyaan singkat. No timer, no pressure — just you and your curiosity.
+                </p>
+
+                {/* Badges */}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-full bg-[#ebe4f8] px-3 py-1 text-[11px] font-semibold text-[#583794]">
+                    15 rapid questions
+                  </span>
+                  <span className="rounded-full bg-[#ebe4f8] px-3 py-1 text-[11px] font-semibold text-[#583794]">
+                    Up to 1500 points
+                  </span>
+                  <span className="rounded-full bg-[#faecc2] px-3 py-1 text-[11px] font-semibold text-[#6d5a1b]">
+                    Your name, your moment
+                  </span>
+                </div>
+
+                {/* Form Input Nama */}
+                <form onSubmit={handleStartQuizFromIntro} className="mt-5 space-y-3">
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#23201d] mb-1">
+                      Kenalan dulu — what's your name?
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={playerName}
+                      onChange={(e) => setPlayerName(e.target.value)}
+                      placeholder="Tulis nama atau nickname kamu"
+                      className="w-full rounded-xl border border-[#e7e2d7] bg-white px-4 py-2.5 text-xs font-semibold text-[#23201d] placeholder:text-[#a8a196] focus:border-[#7350b5] focus:outline-none shadow-sm"
+                    />
+                    <p className="mt-1 text-[10px] text-[#746e63]">
+                      Nama ini dipakai di leaderboard device ini. No account needed.
+                    </p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#a692cb] py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#7350b5]"
+                  >
+                    <span>Mulai Kuis — Let's Go!</span>
+                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-none stroke-currentColor stroke-2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* Step 2: Quiz Question */}
+            {quizStep === 'question' && (
               <div>
                 <div className="mb-4">
-                  <span className="rounded-md bg-[#ebe4f8] px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#583794]">
-                    KUIS INTERAKTIF · SOAL {currentQIndex + 1} DARI {quizQuestions.length}
-                  </span>
-                  <div className="mt-2.5 h-2 w-full rounded-full bg-[#ebe4f8] overflow-hidden">
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-md bg-[#ebe4f8] px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#583794]">
+                      QUICK BRAIN CHECK · {currentQIndex + 1} / {quizQuestions.length}
+                    </span>
+                    <span className="text-xs font-bold text-[#7350b5]">
+                      {quizScore} Poin
+                    </span>
+                  </div>
+                  <div className="mt-2.5 h-1.5 w-full rounded-full bg-[#ebe4f8] overflow-hidden">
                     <div
                       className="h-full bg-[#7350b5] transition-all duration-300"
                       style={{ width: `${((currentQIndex + 1) / quizQuestions.length) * 100}%` }}
@@ -837,7 +922,7 @@ export function App() {
                 {showExplanation && (
                   <div className="mt-3.5 rounded-xl bg-[#f9f6ee] p-3 border border-[#e7e2d7]">
                     <p className="text-[10px] font-bold text-[#583794] mb-0.5">
-                      Penjelasan Edukatif:
+                      Penjelasan:
                     </p>
                     <p className="text-xs text-[#746e63] leading-relaxed">
                       {quizQuestions[currentQIndex].explanation}
@@ -851,53 +936,32 @@ export function App() {
                   </div>
                 )}
               </div>
-            ) : (
+            )}
+
+            {/* Step 3: Result View */}
+            {quizStep === 'result' && (
               <div className="text-center py-2">
                 <span className="rounded-full bg-[#faecc2] px-3.5 py-1 text-xs font-bold text-[#6d5a1b]">
                   Kuis Selesai! 🎉
                 </span>
 
                 <h3 className="mt-3 font-display text-2xl font-extrabold text-[#23201d]">
-                  Skor Kamu: {quizScore} / {quizQuestions.length}
+                  {playerName}, Skormu: {quizScore} / 1500 Poin
                 </h3>
 
                 <p className="mt-1.5 text-xs text-[#746e63] max-w-md mx-auto">
-                  {quizScore >= 12
+                  {quizScore >= 1200
                     ? 'Luar biasa! Pemahamanmu tentang konsep rata-rata lama sekolah dan ketimpangan pendidikan sangat mendalam.'
                     : 'Bagus sekali! Kamu telah menjelajahi perspektif data di balik realitas pendidikan Indonesia.'}
                 </p>
 
-                {!hasSavedScore ? (
-                  <form onSubmit={handleSaveScore} className="mt-5 max-w-sm mx-auto">
-                    <label className="block text-xs font-bold text-[#23201d] mb-1 text-left">
-                      Simpan Namamu di Leaderboard Lokal:
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        required
-                        placeholder="Masukkan nama..."
-                        value={playerName}
-                        onChange={(e) => setPlayerName(e.target.value)}
-                        className="flex-1 rounded-xl border border-[#e7e2d7] bg-[#fbf9f4] px-3 py-1.5 text-xs font-semibold focus:outline-none focus:border-[#7350b5]"
-                      />
-                      <button
-                        type="submit"
-                        className="rounded-xl bg-[#7350b5] px-4 py-1.5 text-xs font-bold text-white hover:bg-[#583794]"
-                      >
-                        Simpan
-                      </button>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="mt-4 rounded-xl bg-emerald-50 p-2.5 text-xs font-bold text-emerald-800">
-                    ✓ Skormu berhasil disimpan di Leaderboard!
-                  </div>
-                )}
+                <div className="mt-4 rounded-xl bg-emerald-50 p-3 text-xs font-bold text-emerald-800">
+                  ✓ Skormu berhasil dicatat di Leaderboard atas nama <strong>{playerName}</strong>!
+                </div>
 
                 <div className="mt-5 flex justify-center gap-3">
                   <button
-                    onClick={handleResetQuiz}
+                    onClick={handleOpenQuiz}
                     className="rounded-xl border border-[#e7e2d7] bg-[#fbf9f4] px-4 py-2 text-xs font-bold text-[#23201d] hover:bg-[#ebe4f8]"
                   >
                     Ulangi Kuis
