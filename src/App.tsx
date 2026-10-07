@@ -207,14 +207,12 @@ export function App() {
               Beda tempat. <br />
               Beda{' '}
               <span className="relative inline-block text-[#7350b5]">
-                kesempatan
+                kesempatan.
                 <svg viewBox="0 0 350 12" className="absolute -bottom-2 left-0 w-full" aria-hidden="true">
                   <path d="M2 8Q170-2 348 6" fill="none" stroke="#daca86" strokeWidth="5" strokeLinecap="round" />
                 </svg>
               </span>
-              ?
             </h1>
-
             <p className="mt-5 max-w-[440px] text-[14px] leading-[1.75] text-[#746e63] sm:text-[15px]">
               Mimpi kita sama besarnya. But when it comes to education, not everyone starts at the same line. <br />
               <strong className="font-semibold text-[#23201d]">Let's unpack the gap. And be part of the change.</strong>
