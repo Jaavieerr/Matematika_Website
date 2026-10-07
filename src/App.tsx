@@ -202,15 +202,15 @@ export function App() {
       </header>
 
       {/* 2. Hero Section */}
-      <section className="mx-auto max-w-[1200px] px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8 lg:px-10">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] items-center">
+      <section className="mx-auto max-w-[1200px] px-4 pt-6 pb-8 sm:px-6 lg:px-10">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] items-center">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#e7e2d7] bg-white px-3.5 py-1 text-xs font-semibold shadow-sm mb-3">
               <span className="h-2 w-2 rounded-full bg-[#7350b5]" />
               <span className="text-[#746e63]">Ruang Belajar Interaktif · 38 Provinsi · BPS 2025</span>
             </div>
 
-            <h1 className="font-display text-[30px] font-extrabold tracking-[-1px] sm:text-[40px] lg:text-[46px] leading-[1.15] text-[#23201d]">
+            <h1 className="font-display text-[32px] font-extrabold tracking-[-1px] sm:text-[44px] lg:text-[50px] leading-[1.12] text-[#23201d]">
               Beda tempat.{' '}
               <span className="relative inline-block text-[#7350b5]">
                 Beda kesempatan.
@@ -220,14 +220,14 @@ export function App() {
               </span>
             </h1>
 
-            <p className="mt-3 text-xs sm:text-sm leading-relaxed text-[#746e63] max-w-lg">
+            <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#746e63] max-w-lg">
               Mimpi setiap anak Indonesia sama besarnya. Namun dalam akses pendidikan, garis awal tidak selalu sama. Mari bedah data ketimpangan dan jadilah bagian dari perubahan.
             </p>
 
-            <div className="mt-5 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
                 href="#explore"
-                className="flex items-center gap-2 rounded-xl bg-[#7350b5] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
+                className="flex items-center gap-2 rounded-xl bg-[#7350b5] px-5 py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
               >
                 <span>Jelajahi Peta</span>
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-currentColor stroke-2">
@@ -237,7 +237,7 @@ export function App() {
 
               <button
                 onClick={handleOpenQuiz}
-                className="flex items-center gap-2 rounded-xl border border-[#e7e2d7] bg-[#faecc2] px-5 py-2.5 text-xs font-bold text-[#6d5a1b] shadow-sm transition hover:bg-[#f5e3ad]"
+                className="flex items-center gap-2 rounded-xl border border-[#e7e2d7] bg-[#faecc2] px-5 py-3 text-xs font-bold text-[#6d5a1b] shadow-sm transition hover:bg-[#f5e3ad]"
               >
                 <span>Mulai Kuis</span>
                 <span className="rounded-full bg-white/60 px-2 py-0.5 text-[10px]">15 Soal</span>
@@ -245,8 +245,23 @@ export function App() {
             </div>
           </div>
 
-          <div className="rounded-[24px] border border-[#e7e2d7] bg-white p-3 sm:p-5 shadow-sm max-w-[480px] mx-auto lg:max-w-none">
-            <HeroIllustration />
+          {/* Large Hero Illustration with Floating Quote Badges */}
+          <div className="relative mx-auto w-full max-w-[560px] lg:max-w-none">
+            <div className="overflow-hidden rounded-[28px] border border-[#e7e2d7] bg-white p-4 sm:p-6 shadow-sm">
+              <HeroIllustration />
+            </div>
+
+            {/* Top-Left Floating Badge */}
+            <div className="absolute -top-3 -left-3 -rotate-6 rounded-2xl border border-[#e4daef] bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm hidden sm:block">
+              <span className="block text-[9px] font-semibold text-[#746e63]">Mimpi nggak kenal kode pos.</span>
+              <span className="text-[12px] font-bold text-[#23201d]">Kesempatan harusnya juga. ✨</span>
+            </div>
+
+            {/* Bottom-Right Floating Badge */}
+            <div className="absolute -bottom-3 -right-3 rotate-3 rounded-2xl border border-[#e4daef] bg-white/95 px-4 py-2 text-[11px] shadow-lg backdrop-blur-sm hidden sm:block">
+              <span className="text-[#746e63]">Di balik setiap angka, </span>
+              <strong className="font-bold text-[#7350b5]">ada cita-cita.</strong>
+            </div>
           </div>
         </div>
       </section>
