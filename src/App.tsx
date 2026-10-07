@@ -121,7 +121,7 @@ export function App() {
     setSelectedChoice(choiceIdx);
     setShowExplanation(true);
     if (choiceIdx === quizQuestions[currentQIndex].correct) {
-      setQuizScore(prev => prev + 100); // 100 points per question = 1500 total
+      setQuizScore(prev => prev + 100);
     }
   };
 
@@ -131,7 +131,6 @@ export function App() {
       setSelectedChoice(null);
       setShowExplanation(false);
     } else {
-      // Finished: automatically save to leaderboard
       const finalScore = quizScore + (selectedChoice === quizQuestions[currentQIndex].correct ? 0 : 0);
       try {
         const existing = localStorage.getItem('sekolah-scores-15');
@@ -152,7 +151,6 @@ export function App() {
     }
   };
 
-  // Medal icons for leaderboard
   const rankMedals = ['🥇', '🥈', '🥉', '04', '05'];
 
   return (
@@ -201,35 +199,34 @@ export function App() {
         </div>
       </header>
 
-      {/* 2. Hero Section */}
-      <section className="mx-auto max-w-[1200px] px-4 pt-6 pb-8 sm:px-6 lg:px-10">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] items-center">
+      {/* 2. Hero Section 100% Persis Gambar #1 */}
+      <section className="mx-auto max-w-[1200px] px-4 pt-6 pb-12 sm:px-6 lg:px-10">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#e7e2d7] bg-white px-3.5 py-1 text-xs font-semibold shadow-sm mb-3">
-              <span className="h-2 w-2 rounded-full bg-[#7350b5]" />
-              <span className="text-[#746e63]">Ruang Belajar Interaktif · 38 Provinsi · BPS 2025</span>
-            </div>
-
-            <h1 className="font-display text-[32px] font-extrabold tracking-[-1px] sm:text-[44px] lg:text-[50px] leading-[1.12] text-[#23201d]">
-              Beda tempat.{' '}
+            <h1 className="font-display text-[44px] font-black tracking-[-1.5px] sm:text-[58px] lg:text-[68px] leading-[1.05] text-[#23201d]">
+              Beda tempat. <br />
+              Beda{' '}
               <span className="relative inline-block text-[#7350b5]">
-                Beda kesempatan.
-                <svg viewBox="0 0 350 12" className="absolute -bottom-1.5 left-0 w-full" aria-hidden="true">
-                  <path d="M2 8Q170-2 348 6" fill="none" stroke="#daca86" strokeWidth="4" strokeLinecap="round" />
+                kesempatan
+                <svg viewBox="0 0 350 12" className="absolute -bottom-2 left-0 w-full" aria-hidden="true">
+                  <path d="M2 8Q170-2 348 6" fill="none" stroke="#daca86" strokeWidth="5" strokeLinecap="round" />
                 </svg>
               </span>
+              ?
             </h1>
 
-            <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#746e63] max-w-lg">
-              Mimpi setiap anak Indonesia sama besarnya. Namun dalam akses pendidikan, garis awal tidak selalu sama. Mari bedah data ketimpangan dan jadilah bagian dari perubahan.
+            <p className="mt-5 max-w-[440px] text-[14px] leading-[1.75] text-[#746e63] sm:text-[15px]">
+              Mimpi kita sama besarnya. But when it comes to education, not everyone starts at the same line. <br />
+              <strong className="font-semibold text-[#23201d]">Let's unpack the gap. And be part of the change.</strong>
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* CTA Buttons Persis Gambar */}
+            <div className="mt-7 flex flex-wrap items-center gap-4">
               <a
                 href="#explore"
-                className="flex items-center gap-2 rounded-xl bg-[#7350b5] px-5 py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
+                className="flex items-center gap-2 rounded-xl bg-[#6145a3] px-6 py-3.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#4d3485]"
               >
-                <span>Jelajahi Peta</span>
+                <span>Let's Find Out</span>
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-currentColor stroke-2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -237,36 +234,95 @@ export function App() {
 
               <button
                 onClick={handleOpenQuiz}
-                className="flex items-center gap-2 rounded-xl border border-[#e7e2d7] bg-[#faecc2] px-5 py-3 text-xs font-bold text-[#6d5a1b] shadow-sm transition hover:bg-[#f5e3ad]"
+                className="flex items-center gap-2 text-xs font-bold text-[#23201d] transition hover:text-[#7350b5]"
               >
-                <span>Mulai Kuis</span>
-                <span className="rounded-full bg-white/60 px-2 py-0.5 text-[10px]">15 Soal</span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#e7e2d7] bg-white shadow-sm">
+                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-[#7350b5] text-[#7350b5]">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </span>
+                <span>Watch the Story</span>
+                <span className="text-[11px] font-normal text-[#746e63]">1 minutes</span>
               </button>
+            </div>
+
+            <div className="mt-8 flex items-center gap-2 text-xs text-[#746e63]">
+              <span>🌐</span>
+              <span>A little data. A bigger perspective.</span>
             </div>
           </div>
 
-          {/* Large Hero Illustration with Floating Quote Badges */}
-          <div className="relative mx-auto w-full max-w-[560px] lg:max-w-none">
-            <div className="overflow-hidden rounded-[28px] border border-[#e7e2d7] bg-white p-4 sm:p-6 shadow-sm">
+          {/* Right Illustration with exact badges */}
+          <div className="relative mx-auto w-full max-w-[500px] lg:max-w-none">
+            <div className="relative">
               <HeroIllustration />
-            </div>
 
-            {/* Top-Left Floating Badge */}
-            <div className="absolute -top-3 -left-3 -rotate-6 rounded-2xl border border-[#e4daef] bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm hidden sm:block">
-              <span className="block text-[9px] font-semibold text-[#746e63]">Mimpi nggak kenal kode pos.</span>
-              <span className="text-[12px] font-bold text-[#23201d]">Kesempatan harusnya juga. ✨</span>
-            </div>
+              {/* Top-Left Floating Badge */}
+              <div className="absolute top-[14%] left-[0%] -rotate-6 rounded-xl border border-[#e4daef] bg-white px-3.5 py-1.5 shadow-[0_5px_15px_#4b366b0a]">
+                <span className="block text-[9px] text-[#746e63]">Dreams have no postcode.</span>
+                <span className="text-[11px] font-bold text-[#23201d]">Kesempatan harusnya juga. ✨</span>
+              </div>
 
-            {/* Bottom-Right Floating Badge */}
-            <div className="absolute -bottom-3 -right-3 rotate-3 rounded-2xl border border-[#e4daef] bg-white/95 px-4 py-2 text-[11px] shadow-lg backdrop-blur-sm hidden sm:block">
-              <span className="text-[#746e63]">Di balik setiap angka, </span>
-              <strong className="font-bold text-[#7350b5]">ada cita-cita.</strong>
+              {/* Bottom-Right Floating Badge */}
+              <div className="absolute right-[4%] bottom-[12%] rotate-3 rounded-xl border border-[#e4daef] bg-white px-3 py-1.5 text-[10px] text-[#746e63] shadow-[0_5px_15px_#4b366b0a]">
+                <span className="font-semibold text-[#23201d]">↗ Small steps. Big futures.</span>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* 3 Metric Cards + Quote Box 100% Persis Gambar #1 */}
+        <div className="mt-8">
+          <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-[#e7e2d7] bg-white sm:grid-cols-[1fr_1fr_1fr_1.15fr]">
+            {/* Box 1: Mean dataset */}
+            <div className="flex items-center gap-3 border-b sm:border-b-0 sm:border-r border-[#e7e2d7] px-5 py-4">
+              <div>
+                <p className="font-display text-2xl font-black text-[#23201d]">
+                  {DATASET_AVG.toFixed(2).replace('.', ',')}{' '}
+                  <span className="text-xs font-normal text-[#746e63]">tahun</span>
+                </p>
+                <p className="text-[11px] text-[#746e63]">Rata-rata dataset</p>
+              </div>
+            </div>
+
+            {/* Box 2: 38 Provinsi */}
+            <div className="flex items-center gap-3 border-b sm:border-b-0 sm:border-r border-[#e7e2d7] px-5 py-4">
+              <div>
+                <p className="font-display text-2xl font-black text-[#23201d]">
+                  38{' '}
+                  <span className="text-xs font-normal text-[#746e63]">provinsi</span>
+                </p>
+                <p className="text-[11px] text-[#746e63]">Different stories, one Indonesia</p>
+              </div>
+            </div>
+
+            {/* Box 3: Gap */}
+            <div className="flex items-center gap-3 border-b sm:border-b-0 sm:border-r border-[#e7e2d7] px-5 py-4">
+              <div>
+                <p className="font-display text-2xl font-black text-[#23201d]">
+                  {(11.59 - 4.3).toFixed(2).replace('.', ',')}{' '}
+                  <span className="text-xs font-normal text-[#746e63]">tahun</span>
+                </p>
+                <p className="text-[11px] text-[#746e63]">Gap tertinggi vs. terendah</p>
+              </div>
+            </div>
+
+            {/* Box 4: Quote Box */}
+            <div className="flex items-center bg-[#f3ecf9] px-5 py-4">
+              <p className="text-xs leading-relaxed text-[#23201d]">
+                Di balik setiap angka, <br />
+                <strong className="font-extrabold text-[#23201d]">ada cerita dan cita-cita.</strong>
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-2 text-right text-[10px] text-[#746e63]">
+            Learning sandbox · 38 provinces · Angka ilustratif, bukan rilis resmi BPS
+          </p>
+        </div>
       </section>
 
-      {/* 3. Section 01: The Big Picture (Peta di kiri, Spotlight di kanan persis Figma) */}
+      {/* 3. Section 01: The Big Picture */}
       <section id="explore" className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-10">
         <div className="mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
@@ -293,10 +349,8 @@ export function App() {
           </div>
         </div>
 
-        {/* Unified 100% Figma Card: Map di kiri, Spotlight di kanan */}
         <div className="overflow-hidden rounded-[26px] border border-[#e7e2d7] bg-white shadow-sm">
           <div className="grid min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_290px]">
-            {/* Map Area on the Left */}
             <div className="relative flex min-w-0 flex-col justify-between bg-[#fcfbfd] p-3 sm:p-4">
               <InteractiveMap selected={selectedProvince} onSelect={(p) => setSelectedProvince(p)} />
 
@@ -309,7 +363,6 @@ export function App() {
               </div>
             </div>
 
-            {/* Sidebar Spotlight on the Right */}
             <div className="flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-[#e7e2d7] bg-[#f9f7f4] p-5">
               <div>
                 <div className="flex items-center justify-between border-b border-[#e7e2d7] pb-2.5">
@@ -321,7 +374,6 @@ export function App() {
                   </span>
                 </div>
 
-                {/* Quick Dropdown Selector */}
                 <div className="mt-3">
                   <label className="block text-[11px] font-bold text-[#746e63] mb-1">
                     Pilih Cepat Provinsi:
@@ -403,7 +455,6 @@ export function App() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-2 items-start">
-          {/* Sub-Card 1: Personal Journey */}
           <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-5 shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between border-b border-[#e7e2d7] pb-2.5 mb-3">
@@ -453,7 +504,6 @@ export function App() {
               </div>
             </div>
 
-            {/* Calculated Milestone Output */}
             <div className="mt-5 rounded-2xl bg-[#f9f6ee] p-4 border border-[#e7e2d7]">
               <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#e7e2d7]">
                 <div>
@@ -484,7 +534,6 @@ export function App() {
             </div>
           </div>
 
-          {/* Sub-Card 2: Versus Mode */}
           <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-5 shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between border-b border-[#e7e2d7] pb-2.5 mb-3">
@@ -677,14 +726,13 @@ export function App() {
         </div>
       </section>
 
-      {/* 6. Section 04: Behind The Numbers (Diagram Lingkaran Persentase) */}
+      {/* 6. Section 04: Behind The Numbers */}
       <BehindTheNumbers />
 
-      {/* 7. Section 05: Leaderboard (100% Persis Image #1) */}
+      {/* 7. Section 05: Leaderboard */}
       <section id="leaderboard" className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-10">
         <div className="overflow-hidden rounded-[22px] border border-[#e7dfb9] bg-[#f8f3de] p-6 sm:p-9 shadow-sm">
           <div className="grid gap-7 md:grid-cols-[0.9fr_1.1fr] items-center">
-            {/* Left Box */}
             <div>
               <div className="mb-3 flex items-center gap-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#f0ebd8] text-[10px] font-bold text-[#5c4a1e]">
@@ -717,7 +765,6 @@ export function App() {
               </p>
             </div>
 
-            {/* Right Leaderboard Card (100% Matching Image #1) */}
             <div className="rounded-[22px] border border-[#e2d8ab] bg-white p-5 sm:p-6 shadow-sm">
               <div className="flex items-center justify-between border-b border-[#f0ebd8] pb-3 mb-2">
                 <h3 className="text-xs font-bold text-[#23201d]">
@@ -728,14 +775,12 @@ export function App() {
                 </span>
               </div>
 
-              {/* Table Column Headers */}
               <div className="grid grid-cols-[36px_1fr_60px] border-b border-[#f0ebd8] py-2 text-[9px] font-bold tracking-wider text-[#8a8169]">
                 <span>RANK</span>
                 <span>EXPLORER</span>
                 <span className="text-right">POINTS</span>
               </div>
 
-              {/* 5 Rows */}
               <div className="divide-y divide-[#f0ebd8]">
                 {[0, 1, 2, 3, 4].map((idx) => {
                   const entry = leaderboard[idx];
@@ -758,7 +803,6 @@ export function App() {
                 })}
               </div>
 
-              {/* Action Button */}
               <button
                 onClick={handleOpenQuiz}
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#7350b5] py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
@@ -793,11 +837,10 @@ export function App() {
         </div>
       </footer>
 
-      {/* 9. Quiz Modal (100% Matching Image #2 with Name Input First) */}
+      {/* 9. Quiz Modal */}
       {isQuizModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
           <div className="relative max-h-[90vh] w-full max-w-[540px] overflow-y-auto rounded-[28px] border border-[#e7e2d7] bg-white p-6 sm:p-8 shadow-2xl">
-            {/* Close Button */}
             <button
               onClick={() => setIsQuizModalOpen(false)}
               className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-[#f3efe6] text-xs font-bold text-[#746e63] hover:bg-[#e7e2d7]"
@@ -805,14 +848,12 @@ export function App() {
               ✕
             </button>
 
-            {/* Step 1: Intro Tab / Kenalan Dulu (100% Persis Image #2) */}
             {quizStep === 'intro' && (
               <div>
                 <p className="text-[10px] font-bold tracking-wider text-[#746e63] uppercase">
                   QUICK BRAIN CHECK · READY, SET, GROW
                 </p>
 
-                {/* Book Icon */}
                 <div className="mt-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#dfd3f0] bg-[#ebe4f8] text-[#7350b5]">
                   <svg viewBox="0 0 24 24" className="h-7 w-7 fill-none stroke-currentColor stroke-2">
                     <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
@@ -830,7 +871,6 @@ export function App() {
                   Let's put your perspective to the test! Kenalan dulu, lalu jawab 15 pertanyaan singkat. No timer, no pressure — just you and your curiosity.
                 </p>
 
-                {/* Badges */}
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className="rounded-full bg-[#ebe4f8] px-3 py-1 text-[11px] font-semibold text-[#583794]">
                     15 rapid questions
@@ -843,7 +883,6 @@ export function App() {
                   </span>
                 </div>
 
-                {/* Form Input Nama */}
                 <form onSubmit={handleStartQuizFromIntro} className="mt-5 space-y-3">
                   <div>
                     <label className="block text-[11px] font-bold text-[#23201d] mb-1">
@@ -875,7 +914,6 @@ export function App() {
               </div>
             )}
 
-            {/* Step 2: Quiz Question */}
             {quizStep === 'question' && (
               <div>
                 <div className="mb-4">
@@ -953,7 +991,6 @@ export function App() {
               </div>
             )}
 
-            {/* Step 3: Result View */}
             {quizStep === 'result' && (
               <div className="text-center py-2">
                 <span className="rounded-full bg-[#faecc2] px-3.5 py-1 text-xs font-bold text-[#6d5a1b]">
