@@ -27,3 +27,5 @@ dist-ssr
 figma_app_extracted.js
 generate_hero.*
 src/components/HeroIllustrationRaw.txt
+
+.vercel
