@@ -6,11 +6,11 @@ interface HeroSectionProps {
 
 export function HeroSection({ onStartQuiz }: HeroSectionProps) {
   return (
-    <section className="mx-auto max-w-[1200px] px-4 sm:px-6 pt-6 pb-12 lg:px-10">
-      <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
+    <section className="mx-auto max-w-[1200px] px-4 sm:px-6 pt-4 pb-6 lg:px-10">
+      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] items-center">
         {/* Left Copy */}
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#e7e2d7] bg-white px-3.5 py-1.5 text-xs font-semibold shadow-sm mb-5">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#e7e2d7] bg-white px-3.5 py-1 text-xs font-semibold shadow-sm mb-3">
             <span className="h-2 w-2 rounded-full bg-[#7350b5]" />
             <span className="text-[#746e63]">Ruang Belajar Interaktif · 38 Provinsi · BPS 2025</span>
           </div>
@@ -25,14 +25,14 @@ export function HeroSection({ onStartQuiz }: HeroSectionProps) {
             </span>
           </h1>
 
-          <p className="mt-5 text-sm sm:text-base leading-relaxed text-[#746e63] max-w-lg">
+          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-[#746e63] max-w-lg">
             Mimpi setiap anak Indonesia sama besarnya. Namun dalam akses pendidikan, garis awal tidak selalu sama. Mari bedah data ketimpangan dan jadilah bagian dari perubahan.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3.5">
+          <div className="mt-5 flex flex-wrap items-center gap-3">
             <a
               href="#explore"
-              className="flex items-center gap-2 rounded-xl bg-[#7350b5] px-6 py-3.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
+              className="flex items-center gap-2 rounded-xl bg-[#7350b5] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#583794]"
             >
               <span>Jelajahi Peta</span>
               <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-currentColor stroke-2">
@@ -42,7 +42,7 @@ export function HeroSection({ onStartQuiz }: HeroSectionProps) {
 
             <button
               onClick={onStartQuiz}
-              className="flex items-center gap-2 rounded-xl border border-[#e7e2d7] bg-[#faecc2] px-6 py-3.5 text-xs font-bold text-[#6d5a1b] shadow-sm transition hover:bg-[#f5e3ad]"
+              className="flex items-center gap-2 rounded-xl border border-[#e7e2d7] bg-[#faecc2] px-5 py-2.5 text-xs font-bold text-[#6d5a1b] shadow-sm transition hover:bg-[#f5e3ad]"
             >
               <span>Mulai Kuis</span>
               <span className="rounded-full bg-white/60 px-2 py-0.5 text-[10px]">15 Soal</span>
@@ -51,7 +51,7 @@ export function HeroSection({ onStartQuiz }: HeroSectionProps) {
         </div>
 
         {/* Right Illustration */}
-        <div className="rounded-[26px] border border-[#e7e2d7] bg-white p-4 sm:p-6 shadow-sm">
+        <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-3 sm:p-4 shadow-sm">
           <HeroIllustration />
         </div>
       </div>

@@ -1,13 +1,28 @@
+@import "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: light;
+  --background: #f9f6ee;
+  --foreground: #23201d;
+  --primary: #7350b5;
+  --primary-foreground: #ffffff;
+  --secondary: #ebe4f8;
+  --secondary-foreground: #583794;
+  --muted: #f3efe6;
+  --muted-foreground: #746e63;
+  --accent: #faecc2;
+  --accent-foreground: #6d5a1b;
+  --border: #e7e2d7;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f9f6ee;
+  color: #23201d;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }

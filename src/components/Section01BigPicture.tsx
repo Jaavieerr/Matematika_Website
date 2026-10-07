@@ -25,21 +25,21 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
   };
 
   return (
-    <section id="explore" className="mx-auto max-w-[1200px] px-4 sm:px-6 py-10 lg:px-10">
+    <section id="explore" className="mx-auto max-w-[1200px] px-4 sm:px-6 py-6 lg:px-10">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
         <div>
           <SectionBadge number="01">GAMBARAN BESAR</SectionBadge>
           <h2 className="font-display text-[24px] font-extrabold tracking-[-0.6px] sm:text-[28px] text-[#23201d]">
             Satu Indonesia. Banyak cerita.
           </h2>
-          <p className="mt-2 text-[13px] text-[#746e63]">
+          <p className="mt-1 text-[13px] text-[#746e63]">
             Klik pin di peta atau pilih provinsi di bawah untuk melihat potret rata-rata lama sekolah.
           </p>
         </div>
 
         {/* National Benchmark Pill */}
-        <div className="flex items-center gap-2 rounded-full border border-[#e7e2d7] bg-white px-4 py-2 text-xs shadow-sm self-start sm:self-auto">
+        <div className="flex items-center gap-2 rounded-full border border-[#e7e2d7] bg-white px-3.5 py-1.5 text-xs shadow-sm self-start sm:self-auto">
           <span className="h-2 w-2 rounded-full bg-[#7350b5] animate-pulse" />
           <span className="text-[#746e63]">Rata-rata Nasional BPS:</span>
           <strong className="font-bold text-[#583794]">{NATIONAL_AVG_OFFICIAL} tahun</strong>
@@ -47,7 +47,7 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
       </div>
 
       {/* Region Filter Bar */}
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-1.5">
         {regions.map((region) => (
           <button
             key={region}
@@ -64,14 +64,14 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
       </div>
 
       {/* Interactive Map */}
-      <div className="mt-4 rounded-[22px] border border-[#e7e2d7] bg-white p-2 sm:p-4 shadow-sm">
+      <div className="mt-3 rounded-[22px] border border-[#e7e2d7] bg-white p-2 sm:p-3 shadow-sm">
         <InteractiveMap selected={selected} onSelect={handleSelect} />
       </div>
 
       {/* Province Spotlight Card & Quick Selector */}
-      <div className="mt-6 grid gap-6 md:grid-cols-[1.1fr_0.9fr] items-start">
+      <div className="mt-4 grid gap-4 md:grid-cols-[1.1fr_0.9fr] items-start">
         {/* Spotlight Details */}
-        <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-5 sm:p-6 shadow-sm">
+        <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-4 sm:p-5 shadow-sm">
           <div className="flex items-center justify-between border-b border-[#e7e2d7] pb-3">
             <span className="rounded-md bg-[#ebe4f8] px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#583794]">
               SOROTAN PROVINSI
@@ -81,7 +81,7 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
             </span>
           </div>
 
-          <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h3 className="font-display text-[22px] font-extrabold text-[#23201d]">
                 {selected.name}
@@ -91,8 +91,8 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
               </p>
             </div>
 
-            <div className="flex items-baseline gap-2 rounded-2xl bg-[#f9f6ee] p-4 border border-[#e7e2d7]">
-              <span className="font-display text-3xl font-extrabold text-[#7350b5]">
+            <div className="flex items-baseline gap-2 rounded-2xl bg-[#f9f6ee] px-3.5 py-2.5 border border-[#e7e2d7]">
+              <span className="font-display text-2xl font-extrabold text-[#7350b5]">
                 {selected.value.toFixed(2)}
               </span>
               <span className="text-xs font-bold text-[#746e63]">tahun</span>
@@ -100,7 +100,7 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
           </div>
 
           {/* Progress Bar vs 16 Years Benchmark */}
-          <div className="mt-5">
+          <div className="mt-3.5">
             <div className="flex justify-between text-[11px] font-semibold text-[#746e63] mb-1.5">
               <span>Rata-rata lama sekolah</span>
               <span>16 tahun (S1)</span>
@@ -113,7 +113,7 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-between rounded-xl bg-[#fbf9f4] p-3 text-xs text-[#746e63]">
+          <div className="mt-3 flex items-center justify-between rounded-xl bg-[#fbf9f4] p-2.5 text-xs text-[#746e63]">
             <span>Selisih terhadap Rata-rata Nasional (9,07 thn):</span>
             <span className={`font-bold ${selected.diff >= 0 ? 'text-emerald-700' : 'text-amber-700'}`}>
               {selected.diff >= 0 ? `+${selected.diff.toFixed(2)} thn` : `${selected.diff.toFixed(2)} thn`}
@@ -122,7 +122,7 @@ export function Section01BigPicture({ onSelectProvince }: Section01Props) {
         </div>
 
         {/* Quick Province Jump List */}
-        <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-5 shadow-sm max-h-[340px] flex flex-col">
+        <div className="rounded-[22px] border border-[#e7e2d7] bg-white p-4 shadow-sm max-h-[300px] flex flex-col">
           <div className="flex items-center justify-between border-b border-[#e7e2d7] pb-3 mb-3">
             <h4 className="text-xs font-bold tracking-wider text-[#746e63] uppercase">
               Daftar Provinsi ({filteredProvinces.length})
